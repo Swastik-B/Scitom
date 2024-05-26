@@ -163,51 +163,76 @@
 	<!-- JS Script Files -->
 	<script>
         function addHeading() {
-            const inputsContainer = document.getElementById('inputs-container');
             const previewContainer = document.getElementById('preview-container');
+	    const headingSelect = document.getElementById('heading-select');
+	    const textInput = document.getElementById('text-input');
+	    const imageInput = document.getElementById('image-input');
+	    const heading = headingSelect.value;
+	    const text = textInput.value;
+	    const files = imageInput.files;
+	    const file = Array.from(imageInput.files); 
+		
+	    if (text.trim() === '' && files.length === 0) {
+	        alert('Please enter text or select images.');
+	        return;
+	    }
+	
+	    // Create a container for the heading, text, and images
+	    const previewElement = document.createElement('div');
+	    previewElement.classList.add('grid-item');
+	
+	    // Add heading
+	    const headingElement = document.createElement('h2');
+	    headingElement.textContent = heading;
+	    previewElement.appendChild(headingElement);
+	
+	    // Add text
+	    const textElement = document.createElement('p');
+	    textElement.textContent = text;
+	    previewElement.appendChild(textElement);
+	
+	    // Add images
+	    if (files.length > 0) {
+	        const imageContainer = document.createElement('div');
+	        imageContainer.classList.add('grid-container');
+	
+	        for (const file of files) {
+	            const img = document.createElement('img');
+	            img.src = URL.createObjectURL(file);
+	            img.classList.add('preview-image'); // Optional: Add a class for styling
+	            imageContainer.appendChild(img);
+	        }
+	
+	        previewElement.appendChild(imageContainer);
+	    }
+	
+	    previewContainer.appendChild(previewElement);
+	    const formData = new FormData();
+	    formData.append('heading', heading);
+	    formData.append('text', text);
+	    files.forEach((file, index) => {
+	        formData.append(`image${index}`, file);
+	    });
 
-            const headingSelect = document.getElementById('heading-select');
-            const textInput = document.getElementById('text-input');
-            const imageInput = document.getElementById('image-input');
-            const heading = headingSelect.value;
-            const text = textInput.value;
-            const files = imageInput.files;
-
-            if (text.trim() === '' && files.length === 0) {
-                alert('Please enter text or select images.');
-                return;
-            }
-
-            // Create a preview element for the new heading, text, and images
-            const previewElement = document.createElement('div');
-            previewElement.classList.add('grid-item');
-
-            const headingElement = document.createElement('h2');
-            headingElement.textContent = heading;
-            previewElement.appendChild(headingElement);
-
-            const textElement = document.createElement('p');
-            textElement.textContent = text;
-            previewElement.appendChild(textElement);
-
-            if (files.length > 0) {
-                const imageContainer = document.createElement('div');
-                imageContainer.classList.add('grid-container');
-
-                for (const file of files) {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
-                    imageContainer.appendChild(img);
-                }
-
-                previewElement.appendChild(imageContainer);
-            }
-
-            previewContainer.appendChild(previewElement);
-
-            // Clear input fields
-            textInput.value = '';
-            imageInput.value = '';
+            const form = document.createElement('form');
+	    form.method = 'POST';
+	    form.action = 'download.html';
+	    form.style.display = 'none';
+	
+	    for (const [key, value] of formData.entries()) {
+	        const input = document.createElement('input');
+	        input.type = 'hidden';
+	        input.name = key;
+	        input.value = value;
+	        form.appendChild(input);
+	    }
+	
+	    document.body.appendChild(form);
+	    form.submit();
+	
+	    document.body.removeChild(form);
+	    textInput.value = '';
+	    imageInput.value = '';
         }
     </script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
