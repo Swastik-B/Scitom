@@ -170,7 +170,6 @@
 	    const heading = headingSelect.value;
 	    const text = textInput.value;
 	    const files = imageInput.files;
-	    const file = Array.from(imageInput.files); 
 		
 	    if (text.trim() === '' && files.length === 0) {
 	        alert('Please enter text or select images.');
@@ -207,32 +206,22 @@
 	    }
 	
 	    previewContainer.appendChild(previewElement);
-	    const formData = new FormData();
-	    formData.append('heading', heading);
-	    formData.append('text', text);
-	    files.forEach((file, index) => {
-	        formData.append(`image${index}`, file);
-	    });
-
-            const form = document.createElement('form');
-	    form.method = 'POST';
-	    form.action = 'download.html';
-	    form.style.display = 'none';
-	
-	    for (const [key, value] of formData.entries()) {
-	        const input = document.createElement('input');
-	        input.type = 'hidden';
-	        input.name = key;
-	        input.value = value;
-	        form.appendChild(input);
-	    }
-	
-	    document.body.appendChild(form);
-	    form.submit();
-	
-	    document.body.removeChild(form);
+		
 	    textInput.value = '';
 	    imageInput.value = '';
+        }
+		
+	function redirectToDownload() {
+            const headingSelect = document.getElementById('heading-select').value;
+            const textInput = document.getElementById('text-input').value;
+            const imageInput = document.getElementById('image-input').files;
+
+            // Encode image filenames to a string for URL
+            const imageFilenames = Array.from(imageInput).map(file => file.name).join(',');
+
+            const queryParams = `?heading=${encodeURIComponent(headingSelect)}&text=${encodeURIComponent(textInput)}&images=${encodeURIComponent(imageFilenames)}`;
+
+            window.location.href = `download.html${queryParams}`;
         }
     </script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
