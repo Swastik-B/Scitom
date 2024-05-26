@@ -13,67 +13,61 @@
 
 	<title>Contact</title>
 	<style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .pre {
-            display: inline-grid;
-            width: 100%;
-            height: 100%;
-        }
-        .editor {
-            width: 50%;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-	.preview {
-            width: 50%;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        .editor {
-            border-right: 1px solid #ccc;
-        }
-        .heading-input {
-            margin-bottom: 20px;
-        }
-        .heading-input select,
-        .heading-input textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-        .heading-input input[type="file"] {
-            margin-bottom: 10px;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-        }
-        .grid-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #ccc;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
-        .grid-item img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-    </style>
+		body {
+	            display: flex;
+	            font-family: Arial, sans-serif;
+	            margin: 0;
+	            padding: 0;
+	            height: 100vh;
+	            overflow: hidden; /* Prevent body from scrolling */
+	        }
+	        .container {
+	            display: flex;
+	            width: 100%;
+	            height: 100%;
+	        }
+	        .editor, .preview {
+	            width: 50%;
+	            padding: 20px;
+	            box-sizing: border-box;
+	            overflow-y: auto; /* Enable vertical scrolling */
+	        }
+	        .editor {
+	            border-right: 1px solid #ccc;
+	        }
+	        .heading-input {
+	            margin-bottom: 20px;
+	        }
+	        .heading-input select,
+	        .heading-input textarea {
+	            width: 100%;
+	            padding: 10px;
+	            margin-bottom: 10px;
+	            box-sizing: border-box;
+	        }
+	        .heading-input input[type="file"] {
+	            margin-bottom: 10px;
+	        }
+	        .grid-container {
+	            display: grid;
+	            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	            gap: 10px;
+	        }
+	        .grid-item {
+	            display: flex;
+	            flex-direction: column;
+	            align-items: center;
+	            border: 1px solid #ccc;
+	            padding: 10px;
+	            box-sizing: border-box;
+	            margin-bottom: 20px;
+	        }
+	        .grid-item img {
+	            max-width: 100%;
+	            height: auto;
+	            margin-bottom: 10px;
+	        }
+    	</style>
 </head>
 <body onload="preloader()">
 	<div id="preloader">
@@ -112,31 +106,32 @@
 			</div>
 			<div class="col-md-9">
 				<div id="main-area">
-					<div class="pre" display="inline-grid">
-						<div class="editor">
-							<h1>Editor</h1>
-							<div id="inputs-container">
-								<div class="heading-input">
-									<select id="heading-select">
-										<option value="Objective">Objective</option>
-										<option value="Abstract">Abstract</option>
-										<option value="Summary">Summary</option>
-										<option value="Methodology">Methodology</option>
-										<option value="Result">Result</option>
-										<option value="Conclusion">Conclusion</option>
-										<option value="Citation">Citation</option>
-									</select>
-									<textarea id="text-input" rows="4" placeholder="Enter text here..."></textarea>
-									<input type="file" id="image-input" multiple accept="image/*" />
-									<button onclick="addHeading()">Add Heading</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="preview">
-						<h1>Preview</h1>
-						<div id="grid-container"></div>
-					</div>
+					<div class="pre">
+					        <div class="editor">
+					            <h1>Editor</h1>
+					            <div id="inputs-container">
+					                <div class="heading-input">
+					                    <select id="heading-select">
+					                        <option value="Objective">Objective</option>
+					                        <option value="Abstract">Abstract</option>
+					                        <option value="Summary">Summary</option>
+					                        <option value="Methodology">Methodology</option>
+					                        <option value="Result">Result</option>
+					                        <option value="Conclusion">Conclusion</option>
+					                        <option value="Citation">Citation</option>
+					                    </select>
+					                    <textarea id="text-input" rows="4" placeholder="Enter text here..."></textarea>
+					                    <input type="file" id="image-input" multiple accept="image/*" />
+					                    <button onclick="addHeading()">Add Heading</button>
+					                    <button onclick="redirectToDownload()">Download</button> <!-- Added download button -->
+					                </div>
+					            </div>
+					        </div>
+					        <div class="preview">
+					            <h1>Preview</h1>
+					            <div id="preview-container"></div>
+					        </div>
+					    </div>
 					<div class="footer">
 						<div class="row">													
 							<div class="col-lg-4 col-md-12 order-lg-2"></div>
